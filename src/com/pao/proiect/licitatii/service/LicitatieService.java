@@ -1,4 +1,4 @@
-﻿package com.pao.proiect.licitatii.service;
+package com.pao.proiect.licitatii.service;
 
 import com.pao.proiect.licitatii.exception.SumaPreaMicaException;
 import com.pao.proiect.licitatii.model.*;

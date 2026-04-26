@@ -1,4 +1,4 @@
-﻿package com.pao.proiect.licitatii.exception;
+package com.pao.proiect.licitatii.exception;
 
 
 public class SumaPreaMicaException extends Exception {

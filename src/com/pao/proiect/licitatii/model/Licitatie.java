@@ -1,4 +1,4 @@
-﻿package com.pao.proiect.licitatii.model;
+package com.pao.proiect.licitatii.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

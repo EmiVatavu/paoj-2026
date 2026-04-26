@@ -1,4 +1,4 @@
-﻿package com.pao.proiect.licitatii.model;
+package com.pao.proiect.licitatii.model;
 
 
 public class ProdusArta extends Produs {

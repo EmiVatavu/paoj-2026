@@ -1,4 +1,4 @@
-﻿package com.pao.proiect.licitatii.model;
+package com.pao.proiect.licitatii.model;
 
 import java.util.Objects;
 
