@@ -1,23 +1,21 @@
 package com.pao.proiect.licitatii.service;
 
 import com.pao.proiect.licitatii.model.Utilizator;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.pao.proiect.licitatii.repository.UtilizatorRepository;
 
+import java.util.List;
 
 public class UtilizatorService {
     private static UtilizatorService instance;
-    private List<Utilizator> utilizatori;
-    private Map<String, Utilizator> indexDupaEmail;
+    private final UtilizatorRepository utilizatorRepository;
+    private final AuditService auditService;
 
     private UtilizatorService() {
-        utilizatori = new ArrayList<>();
-        indexDupaEmail = new HashMap<>();
+        this.utilizatorRepository = new UtilizatorRepository();
+        this.auditService = AuditService.getInstanta();
     }
 
-    public static UtilizatorService getInstance() {
+    public static synchronized UtilizatorService getInstance() {
         if (instance == null) {
             instance = new UtilizatorService();
         }
@@ -25,29 +23,27 @@ public class UtilizatorService {
     }
 
     public void adauga(Utilizator u) {
-        utilizatori.add(u);
-        if (u instanceof com.pao.proiect.licitatii.model.Membru) {
-            indexDupaEmail.put(((com.pao.proiect.licitatii.model.Membru) u).getEmail(), u);
-        }
+        utilizatorRepository.salveaza(u);
+        auditService.scrieActiune("inregistrare_utilizator");
     }
 
     public void sterge(String id) {
-        utilizatori.removeIf(u -> u.getId().getValoare().equals(id));
+        utilizatorRepository.sterge(id);
+        auditService.scrieActiune("stergere_utilizator");
     }
 
     public Utilizator cautaDupaId(String id) {
-        return utilizatori.stream()
-                .filter(u -> u.getId().getValoare().equals(id))
-                .findFirst()
-                .orElse(null);
+        auditService.scrieActiune("cautare_utilizator_id");
+        return utilizatorRepository.cautaDupaId(id).orElse(null);
     }
 
     public Utilizator cautaDupaEmail(String email) {
-        return indexDupaEmail.get(email);
+        auditService.scrieActiune("cautare_utilizator_email");
+        return utilizatorRepository.cautaDupaEmail(email).orElse(null);
     }
 
     public List<Utilizator> listeazaToti() {
-        return new ArrayList<>(utilizatori);
+        auditService.scrieActiune("listare_utilizatori");
+        return utilizatorRepository.gasesteToate();
     }
 }
-
